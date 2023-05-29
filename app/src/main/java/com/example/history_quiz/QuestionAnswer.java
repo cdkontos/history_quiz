@@ -1,7 +1,7 @@
 package com.example.history_quiz;
 
 public class QuestionAnswer {
-    public static String question[] ={
+    public static String[] question ={
             "In which year did the Armenian Genocide occur?",
             "World War II started when Germany invaded which country?",
             "What does NATO stand for?",
@@ -26,7 +26,7 @@ public class QuestionAnswer {
 
     };
 
-    public static String choices[][] ={
+    public static String[][] choices ={
             {"1912","1915","1921","1918"},
             {"Belgium","Soviet Union","France","Poland"},
             {"North Atlantic Treaty Organization","Northern Alliance of Territories & Organizations","New Accord on the Terms of Occupation","North American Treaty Office"},
@@ -50,7 +50,7 @@ public class QuestionAnswer {
 
     };
 
-    public static String answer[] ={
+    public static String[] answer ={
             "1915",
             "Poland",
             "North Atlantic Treaty Organization",
