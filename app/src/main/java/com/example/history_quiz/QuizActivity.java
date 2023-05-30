@@ -52,12 +52,12 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         if(clickedButton.getId() == R.id.ans_A || clickedButton.getId() == R.id.ans_B || clickedButton.getId() == R.id.ans_C || clickedButton.getId() == R.id.ans_D)
         {
             selectedAnswer = clickedButton.getText().toString();
-            currentQuestionIndex++;
-            loadNewQuestion();
             if(selectedAnswer.equals(QuestionAnswer.answer[realQuestionIndex]))
             {
                 score++;
             }
+            currentQuestionIndex++;
+            loadNewQuestion();
         }
 
     }
