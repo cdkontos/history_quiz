@@ -1,5 +1,6 @@
 package com.example.history_quiz;
 
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
@@ -187,42 +188,19 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return leaderboard;
     }
 
-   //We will need a Player class for actions like adding points,searching for a player etc.
-   public class Player {
-       private String Username;
-       private int Points;
+    public void updatePlayerScore(String username, int score) {
+        SQLiteDatabase db = this.getWritableDatabase();
 
-       public Player(String Username, int Points) {
-           this.Username = Username;
-           this.Points = Points;
-       }
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_POINTS, score);
 
-       public void setUsername(String username) {
-           this.Username = username;
-       }
+        String whereClause = COLUMN_USERNAME + " = ?";
+        String[] whereArgs = { username };
 
-        public void setTotalPoints(int points){
-           this.Points=points;
-        }
-       public void addPoints(int points) {
-           Points += points;
+        db.update(TABLE_PLAYERS, values, whereClause, whereArgs);
 
-           // Updating the points of the player in the database
-           SQLiteDatabase db = getWritableDatabase();
-           db.execSQL("UPDATE " + TABLE_PLAYERS +
-                   " SET " + COLUMN_POINTS + " = " + Points +
-                   " WHERE " + COLUMN_USERNAME + " = '" + Username + "'");
-       }
-
-       public String getUsername() {
-           return Username;
-       }
-
-       public int getTotalPoints() {
-           return Points;
-       }
-   }
-
+        db.close();
+    }
 
 
 
