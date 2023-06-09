@@ -8,7 +8,8 @@ import android.database.Cursor;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
-
+import java.util.ArrayList;
+import java.util.List;
 public class MyDBHandler extends SQLiteOpenHelper {
 
     private Context context;
@@ -33,8 +34,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
     private static final String COLUMN_ANSWERS_ID="Answers_ID";
     private static final String COLUMN_ANSWERS_TEXT="Answers_Text";
     private static final String COLUMN_IS_CORRECT="Answers_Is_Correct";
-
-
 
 
 
@@ -149,6 +148,45 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return !exists;
     }
 
+   //a method for the presentation of the leaderboard
+    public List<Player> getLeaderboard() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT " + COLUMN_USERNAME + ", " + COLUMN_POINTS +
+                " FROM " + TABLE_PLAYERS +
+                " ORDER BY " + COLUMN_POINTS + " DESC";
+
+        List<Player> leaderboard = new ArrayList<>();
+
+        Cursor cursor = null;
+
+        try {
+            cursor = db.rawQuery(query, null);
+
+            if (cursor != null && cursor.moveToFirst()) {
+                int usernameIndex = cursor.getColumnIndex(COLUMN_USERNAME);
+                int pointsIndex = cursor.getColumnIndex(COLUMN_POINTS);
+
+                do {
+                    if (usernameIndex != -1 && pointsIndex != -1) {
+                        String username = cursor.getString(usernameIndex);
+                        int points = cursor.getInt(pointsIndex);
+                        Player player = new Player(username,points);
+                        leaderboard.add(player);
+                    }
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("Quiz Database", "Error retrieving leaderboard", e);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return leaderboard;
+    }
+
    //We will need a Player class for actions like adding points,searching for a player etc.
    public class Player {
        private String Username;
@@ -159,6 +197,13 @@ public class MyDBHandler extends SQLiteOpenHelper {
            this.Points = Points;
        }
 
+       public void setUsername(String username) {
+           this.Username = username;
+       }
+
+        public void setTotalPoints(int points){
+           this.Points=points;
+        }
        public void addPoints(int points) {
            Points += points;
 
@@ -177,6 +222,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
            return Points;
        }
    }
+
 
 
 
