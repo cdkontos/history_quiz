@@ -8,12 +8,13 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-
+    private MyDBHandler dbhandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final Button playButton = findViewById(R.id.playButton);
+        dbhandler = DatabaseManager.getInstance(this).getDBHandler();
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
