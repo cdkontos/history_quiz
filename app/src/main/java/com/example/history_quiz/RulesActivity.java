@@ -3,6 +3,7 @@ package com.example.history_quiz;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,9 @@ public class RulesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String username = usernameEditText.getText().toString().trim();
+                DatabaseManager databaseManager = DatabaseManager.getInstance(getApplicationContext());
+                MyDBHandler myDBHandler = databaseManager.getDBHandler();
+                myDBHandler.AddPlayer(username);
                 Intent intent = new Intent(RulesActivity.this, QuizActivity.class);
                 intent.putExtra("username", username);
                 startActivity(intent);

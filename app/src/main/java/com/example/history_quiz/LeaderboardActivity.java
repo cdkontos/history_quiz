@@ -15,11 +15,6 @@ public class LeaderboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
-        CardView cardBest = findViewById(R.id.cardBest);
-        ImageView medal = findViewById(R.id.medal);
-        CardView cardFirst = findViewById(R.id.cardFirst);
-        CardView cardSecond = findViewById(R.id.cardSecond);
-        CardView cardThird = findViewById(R.id.cardThird);
         TextView nameFirst = findViewById(R.id.name_first);
         TextView pointsFirst = findViewById(R.id.points_first);
         TextView nameSecond = findViewById(R.id.name_second);

@@ -48,7 +48,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         //Creating the table for the Players
             String PlayersQuery=
                     "CREATE TABLE " + TABLE_PLAYERS +
-                            " (" + COLUMN_USERNAME + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                            " (" + COLUMN_USERNAME + " TEXT PRIMARY KEY, " +
                             COLUMN_POINTS + " INTEGER);";
             db.execSQL(PlayersQuery);
 
@@ -87,8 +87,10 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 db.beginTransaction();
                 //to add a player, first we have to check if he exists already
                 if(PlayerNotExists(db,Username)){
-                    db.execSQL("INSERT INTO " + TABLE_PLAYERS + "(" + COLUMN_USERNAME + ", " +
-                            COLUMN_POINTS + ") VALUES('" + Username + "', 0)");
+                    ContentValues values = new ContentValues();
+                    values.put(COLUMN_USERNAME, Username);
+                    values.put(COLUMN_POINTS, 0);
+                    db.insert(TABLE_PLAYERS, null, values);
                 }
                 db.setTransactionSuccessful();
             }catch(Exception e){

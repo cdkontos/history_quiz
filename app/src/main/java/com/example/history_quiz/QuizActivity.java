@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -109,6 +110,11 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     }
     void restartQuiz()
     {
+        Intent intent = getIntent();
+        String username = intent.getStringExtra("username");
+        DatabaseManager databaseManager = DatabaseManager.getInstance(getApplicationContext());
+        MyDBHandler database = databaseManager.getDBHandler();
+        database.updatePlayerScore(username,score);
         score = 0;
         currentQuestionIndex = 1;
         indexList.clear();
