@@ -21,7 +21,19 @@ public class QuestionAnswer {
             "Which of the following treaties ended World War I?",
             "What was the name of the first atom bomb dropped on the Japanese city of Hiroshima?",
             "The first Emperor of Rome was:",
-            "Which was the year of America's independence?"
+            "Which was the year of America's independence?",
+            "In what war was the White House burned?",
+            "Where was the Seven Years’ War not fought?",
+            "What is the term used for describing the first six months of World War II?",
+            "Which treaty ended the The Thirty Years’ War(1618–48)?",
+            "How many Punic Wars were fought between the Roman Republic and the Carthaginian empire?",
+            "The Ottoman Empire captured Constantinople in which year?",
+            "What was the German nighttime bombing against Britain during WW II called?",
+            "Which battle marked the end of Napoleon’s power in Spain?",
+            "Which was the largest Russian assault of World War I?",
+            "Which treaty ended the Russo-Turkish War in 1812?",
+            "Which battle occurred at a mountain pass in Greece between the Greek forces led by the Spartan king Leonidas and the Persians led by King Xerxes I in 480 BCE?",
+            "Which is a military tactic was fully developed by the ancient Greeks?"
 
 
     };
@@ -46,7 +58,19 @@ public class QuestionAnswer {
             {"Treaty of Versailles","The Paris Peace Treaties","The Geneva Conference","The Peace of Westphalia"},
             {"Destroyer","Big boy","Little boy","Scorpion"},
             {"Augustus","Tiberius","Nero","Lucius Verus"},
-            {"1790","1750","1800","1776"}
+            {"1790","1750","1800","1776"},
+            {"Civil War","War of 1812","Revolutionary War","World war I"},
+            {"Antarctica","North America","Europe","Asia"},
+            {"Phony War","War of the Pacific","Pig War","Moro War"},
+            {"Treaty of Westphalia","Peace of Lodi","Treaty of Constantinople","Treaty of San Francisco"},
+            {"Eight","Five","One","Three"},
+            {"1430","1502","1453","1469"},
+            {"Viking invasion","Belfast Blitz","The Blitz","Operation Colossus"},
+            {"Battle of the Nive","Battle of Salamanca","Battle of Vitoria","Battle of Orthez"},
+            {"Battle of Verdun","Great Retreat","Brusilov Offensive","Gorlice–Tarnów Offensive"},
+            {"Treaty of Kars","Treaty of Trianon","Treaty of Bucharest","Treaty of Lausanne"},
+            {"Battle of Salamis","Battle of Thermopylae","Battle of Artemisium","Battle of Marathon"},
+            {"Pike square","Phoulkon","Laager","Phalanx"}
 
     };
 
@@ -70,7 +94,19 @@ public class QuestionAnswer {
             "Treaty of Versailles",
             "Little boy",
             "Augustus",
-            "1776"
+            "1776",
+            "War of 1812",
+            "Antarctica",
+            "Phony War",
+            "Treaty of Westphalia",
+            "Three",
+            "1453",
+            "The Blitz",
+            "Battle of Vitoria",
+            "Brusilov Offensive",
+            "Treaty of Bucharest",
+            "Battle of Thermopylae",
+            "Phalanx"
 
     };
 }
