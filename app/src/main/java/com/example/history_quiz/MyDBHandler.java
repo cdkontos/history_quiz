@@ -83,7 +83,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
 
         //3 Methods will be used for the players in the database: Adding,Getting and Checking if the player exists in the db
-        public void AddPlayer(String Username){
+        public void AddPlayer(String username){
             SQLiteDatabase db=this.getWritableDatabase();
 
             try{
@@ -97,10 +97,10 @@ public class MyDBHandler extends SQLiteOpenHelper {
                         idExists=playerIdExists(db,idPlayer);
                     }
                 }
-                if(PlayerNotExists(db,Username)){
+                if(PlayerNotExists(db,username)){
                     ContentValues values = new ContentValues();
                     values.put(COLUMN_ID_PLAYER, idPlayer);
-                    values.put(COLUMN_USERNAME, Username);
+                    values.put(COLUMN_USERNAME, username);
                     values.put(COLUMN_POINTS, 0);
                     db.insert(TABLE_PLAYERS, null, values);
                 }
@@ -112,40 +112,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
             }
         }
 
-   /* public Player getPlayer(String Username) {
-        SQLiteDatabase db = this.getReadableDatabase();
 
-        String[] columns = {
-                COLUMN_USERNAME,
-                COLUMN_POINTS
-        };
-
-        String selection = COLUMN_USERNAME + " = ?";
-        String[] selectionArgs = { Username };
-
-        Cursor cursor = db.query(TABLE_PLAYERS, columns, selection, selectionArgs, null, null, null);
-
-        Player player = null;
-        if (cursor != null && cursor.moveToFirst()) {
-            int UsernameIndex = cursor.getColumnIndex(COLUMN_USERNAME);
-            int PointsIndex = cursor.getColumnIndex(COLUMN_POINTS);
-
-            if (UsernameIndex != -1 && PointsIndex != -1) {
-                String name = cursor.getString(UsernameIndex);
-                int Points = cursor.getInt(PointsIndex);
-
-                player = new Player(name, Points);
-            }
-        }
-
-        if (cursor != null) {
-            cursor.close();
-        }
-        db.close();
-
-        return player;
-    }
-*/
 
     // Helper method to check if a player already exists with the given ID
     private boolean playerIdExists(SQLiteDatabase db, int idPlayer) {
@@ -170,11 +137,11 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return random.nextInt(1000); // Adjust the range as per your requirements
     }
 
-    private boolean PlayerNotExists(SQLiteDatabase db,String Username) {
+    private boolean PlayerNotExists(SQLiteDatabase db,String username) {
         Cursor cursor1 = db.query(TABLE_PLAYERS,
                 new String[]{COLUMN_USERNAME},
                 COLUMN_USERNAME + " = ?",
-                new String[]{Username},
+                new String[]{username},
                 null, null, null);
 
         boolean exists = (cursor1 != null && cursor1.moveToFirst());
@@ -190,7 +157,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public List<Player> getLeaderboard() {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT " + COLUMN_USERNAME + ", " + COLUMN_POINTS +
+        String query = "SELECT " + COLUMN_ID_PLAYER + ", " + COLUMN_USERNAME + ", " + COLUMN_POINTS +
                 " FROM " + TABLE_PLAYERS +
                 " ORDER BY " + COLUMN_POINTS + " DESC";
 
@@ -225,11 +192,41 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return leaderboard;
     }
 
+    public int getPlayerScore(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int score = 0;
+
+        String[] projection = {COLUMN_POINTS};
+        String selection = COLUMN_USERNAME + " = ?";
+        String[] selectionArgs = {username};
+
+        Cursor cursor = db.query(TABLE_PLAYERS, projection, selection, selectionArgs, null, null, null);
+        if (cursor.moveToFirst()) {
+            int scoreColumnIndex = cursor.getColumnIndex(COLUMN_POINTS);
+            if (scoreColumnIndex != -1) {
+                score = cursor.getInt(scoreColumnIndex);
+            }
+        }
+        cursor.close();
+
+        return score;
+    }
+
+
+
+
     public void updatePlayerScore(String username, int score) {
         SQLiteDatabase db = this.getWritableDatabase();
 
+        // Retrieve the current score from the database
+        int currentScore = getPlayerScore(username);
+
+        // Calculate the new total score
+        int totalScore = currentScore + score;
+
+        // Update the total score in the database
         ContentValues values = new ContentValues();
-        values.put(COLUMN_POINTS, score);
+        values.put(COLUMN_POINTS, totalScore);
 
         String whereClause = COLUMN_USERNAME + " = ?";
         String[] whereArgs = { username };
