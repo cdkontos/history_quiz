@@ -1,14 +1,13 @@
 package com.example.history_quiz;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
@@ -17,7 +16,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     TextView questionNum, question;
     Button ansA, ansB, ansC, ansD;
-    int quizSize = 5;
+    int quizSize = 20;
     int score = 0;
     int totalQuestion = QuestionAnswer.question.length;
     int currentQuestionIndex = 1;
@@ -65,6 +64,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     void loadNewQuestion()
     {
+        System.out.println(indexList.size());
         if(indexList.size()==quizSize)
         {
             finishQuiz();
@@ -75,8 +75,10 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
             indexList.add(realQuestionIndex);
         else
         {
-            while(indexList.contains(randomIndex()));
+            while(indexList.contains(realQuestionIndex = randomIndex()));
+            indexList.add(realQuestionIndex);
         }
+        System.out.println("realquestionindex " + realQuestionIndex);
         question.setText(QuestionAnswer.question[realQuestionIndex]);
         questionNum.setText(String.valueOf(currentQuestionIndex));
         ansA.setText(QuestionAnswer.choices[realQuestionIndex][0]);
