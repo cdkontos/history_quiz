@@ -11,6 +11,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 public class MyDBHandler extends SQLiteOpenHelper {
 
     private Context context;
@@ -21,6 +22,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     // We have 3 Entities: Players,Questions,Answers
     //table for the players and its attributes, username(primary key)
     private static final String TABLE_PLAYERS="Players";
+    private static final String COLUMN_ID_PLAYER="IDPlayer";
     private static final String COLUMN_USERNAME="Username";
     private static final String COLUMN_POINTS="Points";
 
@@ -46,11 +48,12 @@ public class MyDBHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //Creating the table for the Players
-            String PlayersQuery=
-                    "CREATE TABLE " + TABLE_PLAYERS +
-                            " (" + COLUMN_USERNAME + " TEXT PRIMARY KEY, " +
-                            COLUMN_POINTS + " INTEGER);";
-            db.execSQL(PlayersQuery);
+        String playersQuery =
+                "CREATE TABLE " + TABLE_PLAYERS +
+                        " (" + COLUMN_ID_PLAYER + " INTEGER PRIMARY KEY, " +
+                        COLUMN_USERNAME + " TEXT, " +
+                        COLUMN_POINTS + " INTEGER);";
+        db.execSQL(playersQuery);
 
         //Creating the table for the Questions
             String QuestionsQuery=
@@ -85,9 +88,18 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
             try{
                 db.beginTransaction();
-                //to add a player, first we have to check if he exists already
+                //to add a player, first we have to check if he exists already and his randomly generated id as well
+                int idPlayer = generateRandomId();
+                boolean idExists= playerIdExists(db,idPlayer);
+                while(idExists){
+                    if(idExists){
+                        idPlayer=generateRandomId();
+                        idExists=playerIdExists(db,idPlayer);
+                    }
+                }
                 if(PlayerNotExists(db,Username)){
                     ContentValues values = new ContentValues();
+                    values.put(COLUMN_ID_PLAYER, idPlayer);
                     values.put(COLUMN_USERNAME, Username);
                     values.put(COLUMN_POINTS, 0);
                     db.insert(TABLE_PLAYERS, null, values);
@@ -100,7 +112,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
             }
         }
 
-    public Player getPlayer(String Username) {
+   /* public Player getPlayer(String Username) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String[] columns = {
@@ -133,7 +145,30 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
         return player;
     }
+*/
 
+    // Helper method to check if a player already exists with the given ID
+    private boolean playerIdExists(SQLiteDatabase db, int idPlayer) {
+        Cursor cursor = db.query(TABLE_PLAYERS,
+                new String[]{COLUMN_ID_PLAYER},
+                COLUMN_ID_PLAYER + " = ?",
+                new String[]{String.valueOf(idPlayer)},
+                null, null, null);
+
+        boolean exists = (cursor != null && cursor.moveToFirst());
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        return exists;
+    }
+
+    // Helper method to generate a random ID for the player
+    private int generateRandomId() {
+        Random random = new Random();
+        return random.nextInt(1000); // Adjust the range as per your requirements
+    }
 
     private boolean PlayerNotExists(SQLiteDatabase db,String Username) {
         Cursor cursor1 = db.query(TABLE_PLAYERS,
