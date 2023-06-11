@@ -25,7 +25,9 @@
             android:layout_height="200dp"
             android:translationX="200dp"
             app:srcCompat="@drawable/gold_medal_8_svgrepo_com"
-            app:tint="@color/seed" />
+            app:tint="@color/seed"
+            android:importantForAccessibility="no"
+            tools:ignore="VisualLintBounds" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

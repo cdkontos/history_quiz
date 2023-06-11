@@ -95,18 +95,10 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     void finishQuiz()
     {
-        String passStatus;
-        if(score >quizSize*0.60)
-        {
-            passStatus = "Passed";
-        }
-        else
-            passStatus = "Failed";
-
         new AlertDialog.Builder(this)
-                .setTitle(passStatus)
+                .setTitle("Congratulations!")
                 .setMessage("Score is " + score + " out of " + quizSize)
-                .setPositiveButton("Restart",(dialogInterface, i) -> restartQuiz())
+                .setPositiveButton("Finish",(dialogInterface, i) -> restartQuiz())
                 .setCancelable(false)
                 .show();
     }
@@ -116,7 +108,9 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         String username = intent.getStringExtra("username");
         DatabaseManager databaseManager = DatabaseManager.getInstance(getApplicationContext());
         MyDBHandler database = databaseManager.getDBHandler();
-        database.updatePlayerScore(username,score);
+        int oldScore = database.getPlayerScore(username);
+        if(oldScore<score)
+            database.updatePlayerScore(username,score);
         score = 0;
         currentQuestionIndex = 1;
         indexList.clear();

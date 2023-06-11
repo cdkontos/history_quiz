@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Random;
 public class MyDBHandler extends SQLiteOpenHelper {
 
-    private Context context;
     private static final String DATABASE_NAME="HistoryQuiz.db";
     private static final int DATABASE_VERSION=1;
 
@@ -42,7 +41,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     public MyDBHandler(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        this.context= context;
     }
 
     @Override
@@ -92,10 +90,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 int idPlayer = generateRandomId();
                 boolean idExists= playerIdExists(db,idPlayer);
                 while(idExists){
-                    if(idExists){
-                        idPlayer=generateRandomId();
-                        idExists=playerIdExists(db,idPlayer);
-                    }
+                    idPlayer=generateRandomId();
+                    idExists=playerIdExists(db,idPlayer);
                 }
                 if(PlayerNotExists(db,username)){
                     ContentValues values = new ContentValues();

@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">history_quiz</string>
+    <string name="take_the_quiz">Take the quiz</string>
+    <string name="rules">Rules</string>
+    <string name="there_are_20_questions_for_1_point_each">There are 20 questions for 1 point each.</string>
+    <string name="as_many_times">as many times</string>
+    <string name="as_you_want_to">as you want to</string>
+    <string name="join_the_ranks">join the ranks.</string>
+    <string name="enter_name">Enter name</string>
+    <string name="begin">Begin</string>
+    <string name="history_quiz">History Quiz</string>
+    <string name="welcome_to_the_history_quiz">Welcome to the History Quiz!</string>
+    <string name="play">Play</string>
+    <string name="leaderboard">Leaderboard</string>
 </resources>
