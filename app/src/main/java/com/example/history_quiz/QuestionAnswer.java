@@ -1,5 +1,9 @@
 package com.example.history_quiz;
 
+/**
+ * This is a helper class for us to generate the questions, the choices, and the right answers of the History Quiz.
+ * @author Georgios Hakobyan
+ */
 public class QuestionAnswer {
     public static String[] question ={
             "In which year did the Armenian Genocide occur?",

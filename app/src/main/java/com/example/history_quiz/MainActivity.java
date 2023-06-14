@@ -7,10 +7,10 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
- * This is the MainActivity class for the layout {@link R.layout#activity_main} History Quiz app.
+ * This is the MainActivity class for the layout {@link R.layout#activity_main} of the History Quiz app.
  * It is the home screen of the app where the user will first be taken.
- * The user can be redirected to the {@link RulesActivity} layout {@link R.layout#activity_rules}
- * and the {@link LeaderboardActivity} layout {@link R.layout#activity_leaderboard} to check the rules
+ * The user can be redirected to the {@link RulesActivity} layout {@link R.layout#activity_rules}.
+ * and the {@link LeaderboardActivity} layout {@link R.layout#activity_leaderboard} to check the rules.
  * and start the quiz or check the leaderboard respectively.
  * The database that will be used for the app gets initialized here.
  * @author Christos Kontos

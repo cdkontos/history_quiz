@@ -12,6 +12,11 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+/**
+ * This is the MyDBHandler class that is responsible for managing the SQL database of the History Quiz app.
+ * @author Georgios Hakobyan
+ */
+
 public class MyDBHandler extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME="HistoryQuiz.db";
@@ -19,7 +24,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
 
     // We have 3 Entities: Players,Questions,Answers
-    //table for the players and its attributes, username(primary key)
+
+
+    //table for the players and its attributes,IDplayer(primary key)
     private static final String TABLE_PLAYERS="Players";
     private static final String COLUMN_ID_PLAYER="IDPlayer";
     private static final String COLUMN_USERNAME="Username";
@@ -80,6 +87,14 @@ public class MyDBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+
+    /**
+     * This method is used whenever a username is typed in the {@link R.layout#activity_rules}.
+     * When it receives the username it checks if the username already exists in the database.
+     * If the username doesn't exist it randomly generates an ID number for the player and it initializes his points to 0.
+     * @param username The name of the player that is requested to be added.
+     * @author Georgios Hakobyan
+     */
         //3 Methods will be used for the players in the database: Adding,Getting and Checking if the player exists in the db
         public void AddPlayer(String username){
             SQLiteDatabase db=this.getWritableDatabase();
@@ -109,8 +124,13 @@ public class MyDBHandler extends SQLiteOpenHelper {
         }
 
 
-
-    // Helper method to check if a player already exists with the given ID
+    /**
+     * This method is used to check if a given ID already exists in the database.
+     * @param db SQL database instance.
+     * @param idPlayer The ID that needs to be checked.
+     * @return {@code true} if this ID exists, {@code false} if it doesn't.
+     * @author Georgios Hakobyan
+     */
     private boolean playerIdExists(SQLiteDatabase db, int idPlayer) {
         Cursor cursor = db.query(TABLE_PLAYERS,
                 new String[]{COLUMN_ID_PLAYER},
@@ -127,12 +147,23 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return exists;
     }
 
-    // Helper method to generate a random ID for the player
+    /**
+     * This method is used to generate a random number for the ID of the new player.
+     * @return the generated number.
+     * @author Georgios Hakobyan
+     */
     private int generateRandomId() {
         Random random = new Random();
         return random.nextInt(1000); // Adjust the range as per your requirements
     }
 
+    /**
+     * This method checks if the username given exists already in the database.
+     * @param db The SQL database instance.
+     * @param username The username that needs to be checked.
+     * @return {@code true} if this username doesn't exist, {@code false} if it does.
+     * @author Georgios Hakobyan
+     */
     private boolean PlayerNotExists(SQLiteDatabase db,String username) {
         Cursor cursor1 = db.query(TABLE_PLAYERS,
                 new String[]{COLUMN_USERNAME},
@@ -149,7 +180,11 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return !exists;
     }
 
-   //a method for the presentation of the leaderboard
+    /**
+     * This method is used to retrieve the leaderboard from the database. It sorts all the players from highest to lowest points earned.
+     * @return A list that includes all the player objects from the database sorted based on their total points.
+     * @author Georgios Hakobyan
+     */
     public List<Player> getLeaderboard() {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -175,12 +210,18 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.e("Quiz Database", "Error retrieving leaderboard", e);
+            Log.e("Quiz Database", "Error presenting leaderboard", e);
         }
 
         return leaderboard;
     }
 
+    /**
+     * This method returns the current points of a specific player.
+     * @param username The username of the player that his score is needed.
+     * @return The score of the player.
+     * @author Georgios Hakobyan
+     */
     public int getPlayerScore(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
         int score = 0;
@@ -202,15 +243,19 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
 
 
-
-
+    /**
+     * This method is used to update the points of a player. It receives the recent score and adds his previous.
+     * @param username The username of the player.
+     * @param score The recent score.
+     * @author Georgios Hakobyan
+     */
     public void updatePlayerScore(String username, int score) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         // Retrieve the current score from the database
         int currentScore = getPlayerScore(username);
 
-        // Calculate the new total score
+        // The new total score
         int totalScore = currentScore + score;
 
         // Update the total score in the database

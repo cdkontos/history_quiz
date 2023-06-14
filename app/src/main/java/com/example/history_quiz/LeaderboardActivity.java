@@ -8,6 +8,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.List;
+/**
+ * This is the Leaderboard class for the layout {@link R.layout#activity_leaderboard} of the History Quiz app.
+ * It is the screen of the app that shows the total points of every player.
+ * The players are ranked based on their total points in total, for every quiz they have taken.
+ * @author Georgios Hakobyan
+ * @author Leonidas Christoforou
+ */
 public class LeaderboardActivity extends AppCompatActivity {
 
     @Override
