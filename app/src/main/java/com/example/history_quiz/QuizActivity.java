@@ -145,7 +145,8 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * This method searches the database for the username of the user and updates their score using
+     * This method searches the database for the username of the user and their old score and
+     * if their current score is higher than before updates it using
      * the {@link MyDBHandler#updatePlayerScore(String, int)} method of the {@link MyDBHandler} class.
      * After it resets the variables for the score and the question indexing and returns the user to
      * the home screen.
