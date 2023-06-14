@@ -7,6 +7,14 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * This is the RulesActivity class for the layout {@link R.layout#activity_rules} of the History Quiz app.
+ * The quiz rules are shown to the user, as well as the field to type their username
+ * and the button to start the quiz and take the user to the {@link QuizActivity} layout {@link R.layout#activity_quiz}.
+ * @author Christos Kontos
+ * @author Georgios Akompian
+ * @author Leonidas Christoforou
+ */
 public class RulesActivity extends AppCompatActivity {
 
     @Override

@@ -159,10 +159,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
         List<Player> leaderboard = new ArrayList<>();
 
-        Cursor cursor = null;
-
-        try {
-            cursor = db.rawQuery(query, null);
+        try (Cursor cursor = db.rawQuery(query, null)) {
 
             if (cursor != null && cursor.moveToFirst()) {
                 int usernameIndex = cursor.getColumnIndex(COLUMN_USERNAME);
@@ -172,17 +169,13 @@ public class MyDBHandler extends SQLiteOpenHelper {
                     if (usernameIndex != -1 && pointsIndex != -1) {
                         String username = cursor.getString(usernameIndex);
                         int points = cursor.getInt(pointsIndex);
-                        Player player = new Player(username,points);
+                        Player player = new Player(username, points);
                         leaderboard.add(player);
                     }
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
             Log.e("Quiz Database", "Error retrieving leaderboard", e);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
         }
 
         return leaderboard;
