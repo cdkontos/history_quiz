@@ -1,5 +1,6 @@
 package com.example.history_quiz;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -26,12 +27,25 @@ public class RulesActivity extends AppCompatActivity {
 
         playButton.setOnClickListener(v -> {
             String username = usernameEditText.getText().toString().trim();
-            DatabaseManager databaseManager = DatabaseManager.getInstance(getApplicationContext());
-            MyDBHandler myDBHandler = databaseManager.getDBHandler();
-            myDBHandler.AddPlayer(username);
-            Intent intent = new Intent(RulesActivity.this, QuizActivity.class);
-            intent.putExtra("username", username);
-            startActivity(intent);
+            if (username.isEmpty()) {
+                AlertDialog alertDialog = new AlertDialog.Builder(this)
+                        .setTitle("Username is blank!")
+                        .setMessage("Please try again.")
+                        .setPositiveButton("Ok", null) // Set the positive button to null
+                        .setCancelable(false)
+                        .show();
+
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(dialog -> {
+                    alertDialog.dismiss(); // Dismiss the dialog
+                });
+            } else {
+                DatabaseManager databaseManager = DatabaseManager.getInstance(getApplicationContext());
+                MyDBHandler myDBHandler = databaseManager.getDBHandler();
+                myDBHandler.AddPlayer(username);
+                Intent intent = new Intent(RulesActivity.this, QuizActivity.class);
+                intent.putExtra("username", username);
+                startActivity(intent);
+            }
         });
     }
 }
